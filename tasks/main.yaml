@@ -1,0 +1,10 @@
+- name: Check if docker is installed and running
+  command: docker ps
+  register: docker_status
+  changed_when: false
+  failed_when: false
+  check_mode: no
+
+- name: Include all other tasks
+  include_tasks: install.yml
+  when: docker_status.rc != 0 | bool
